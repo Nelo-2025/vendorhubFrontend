@@ -1,0 +1,176 @@
+
+  :root{
+    --ink:#14121F;
+    --paper:#F5F3FF;
+    --primary:#4C3AE3;
+    --primary-dark:#382AB0;
+    --accent:#B6FF3C;
+    --muted:#6B6580;
+    --line:#DCD6F5;
+    --card-bg:#FFFFFF;
+    --radius:18px;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--paper); color:var(--ink); font-family:'Inter', sans-serif; -webkit-font-smoothing:antialiased;}
+  a{color:inherit; text-decoration:none;}
+  .display{font-family:'Space Grotesk', sans-serif;}
+  .mono{font-family:'JetBrains Mono', monospace;}
+
+  /* ---------- Nav (same as index) ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(245,243,255,0.88); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{max-width:1180px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:18px 24px;}
+  .logo{font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:1.35rem; display:flex; align-items:center; gap:8px;}
+  .logo .dot{width:10px; height:10px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 3px var(--primary);}
+  .btn{display:inline-flex; align-items:center; justify-content:center; padding:10px 20px; border-radius:999px; font-weight:600; font-size:0.9rem; cursor:pointer; border:none; transition:transform .15s, box-shadow .15s;}
+  .btn-primary{background:var(--ink); color:var(--paper);}
+  .btn-primary:hover{transform:translateY(-1px); box-shadow:0 6px 16px rgba(20,18,31,0.25);}
+  .btn-ghost{background:transparent; color:var(--ink); border:1px solid var(--line);}
+  .btn-ghost:hover{border-color:var(--ink);}
+
+  .breadcrumb{max-width:1180px; margin:0 auto; padding:18px 24px 0; font-size:0.85rem; color:var(--muted);}
+  .breadcrumb a:hover{color:var(--ink);}
+
+  /* ---------- Layout ---------- */
+  .event-layout{
+    max-width:1180px; margin:0 auto; padding:20px 24px 80px;
+    display:grid; grid-template-columns:1.6fr 1fr; gap:36px; align-items:start;
+  }
+
+  /* ---------- Banner ---------- */
+  .banner{
+    height:280px; border-radius:22px;
+    background:linear-gradient(135deg, var(--primary), #7C6CF0);
+    position:relative; overflow:hidden;
+  }
+  .banner .category-tag{
+    position:absolute; top:18px; left:18px;
+    background:rgba(20,18,31,0.55); color:#fff; font-size:0.78rem;
+    padding:6px 14px; border-radius:999px; backdrop-filter:blur(4px);
+  }
+  .banner .save-btn{
+    position:absolute; top:18px; right:18px;
+    width:40px; height:40px; border-radius:50%;
+    background:rgba(255,255,255,0.9); display:flex; align-items:center; justify-content:center;
+    cursor:pointer; font-size:1.1rem; border:none;
+  }
+
+  /* ---------- Title block ---------- */
+  .title-block{margin-top:28px;}
+  .title-block h1{font-family:'Space Grotesk',sans-serif; font-size:clamp(1.8rem, 3.2vw, 2.6rem); line-height:1.15; letter-spacing:-0.01em;}
+  .meta-row{display:flex; flex-wrap:wrap; gap:22px; margin-top:18px;}
+  .meta-item{display:flex; gap:12px; align-items:flex-start;}
+  .meta-icon{
+    width:38px; height:38px; border-radius:10px; background:#fff; border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; font-size:1.05rem; flex-shrink:0;
+  }
+  .meta-item .label{font-size:0.78rem; color:var(--muted);}
+  .meta-item .value{font-weight:600; font-size:0.92rem; margin-top:2px;}
+
+  /* ---------- Organiser ---------- */
+  .organiser-card{
+    margin-top:28px; padding:16px 18px; border:1px solid var(--line); border-radius:14px;
+    display:flex; align-items:center; gap:14px; background:#fff;
+  }
+  .organiser-avatar{
+    width:44px; height:44px; border-radius:50%; background:var(--ink); color:var(--accent);
+    display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-weight:700;
+  }
+  .organiser-card .name{font-weight:600; font-size:0.92rem;}
+  .organiser-card .role{font-size:0.8rem; color:var(--muted);}
+  .organiser-card .btn-ghost{margin-left:auto; padding:8px 16px; font-size:0.82rem;}
+
+  /* ---------- Description ---------- */
+  .section-title{font-family:'Space Grotesk',sans-serif; font-size:1.2rem; margin:34px 0 12px;}
+  .description{color:var(--muted); line-height:1.7; font-size:0.96rem;}
+  .description p + p{margin-top:12px;}
+
+  /* ---------- Venue map placeholder ---------- */
+  .venue-box{
+    margin-top:14px; border:1px solid var(--line); border-radius:16px; overflow:hidden; background:#fff;
+  }
+  .venue-map{
+    height:160px;
+    background:
+      linear-gradient(rgba(76,58,227,0.08), rgba(76,58,227,0.08)),
+      repeating-linear-gradient(0deg, #E7E3FA 0 1px, transparent 1px 28px),
+      repeating-linear-gradient(90deg, #E7E3FA 0 1px, transparent 1px 28px);
+    display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:0.85rem;
+  }
+  .venue-info{padding:14px 18px;}
+  .venue-info .name{font-weight:600; font-size:0.94rem;}
+  .venue-info .address{font-size:0.85rem; color:var(--muted); margin-top:2px;}
+
+  /* ---------- Ticket panel (sticky) ---------- */
+  .ticket-panel{
+    position:sticky; top:96px;
+    background:#fff; border:1px solid var(--line); border-radius:var(--radius);
+    padding:22px; box-shadow:0 18px 40px rgba(76,58,227,0.10);
+  }
+  .ticket-panel h2{font-family:'Space Grotesk',sans-serif; font-size:1.15rem; margin-bottom:16px;}
+
+  .ticket-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 0; border-top:1px dashed var(--line);
+    gap:12px;
+  }
+  .ticket-row:first-of-type{border-top:none;}
+  .ticket-row .info .name{font-weight:600; font-size:0.94rem;}
+  .ticket-row .info .price{font-family:'Space Grotesk',sans-serif; font-weight:700; margin-top:2px;}
+  .ticket-row .info .price.free{color:var(--primary);}
+  .ticket-row .info .stock{font-size:0.76rem; color:var(--muted); margin-top:2px;}
+
+  .qty-control{display:flex; align-items:center; gap:10px; flex-shrink:0;}
+  .qty-btn{
+    width:30px; height:30px; border-radius:50%; border:1px solid var(--line); background:#fff;
+    cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center;
+    line-height:1; color:var(--ink); transition:background .15s;
+  }
+  .qty-btn:hover{background:var(--paper);}
+  .qty-btn:disabled{opacity:0.35; cursor:not-allowed;}
+  .qty-value{width:22px; text-align:center; font-family:'JetBrains Mono',monospace; font-weight:500;}
+
+  .perforation{
+    position:relative; margin:18px -22px; height:0;
+    border-top:2px dashed var(--line);
+  }
+  .perforation::before, .perforation::after{
+    content:''; position:absolute; top:-9px; width:18px; height:18px;
+    background:var(--paper); border-radius:50%;
+  }
+  .perforation::before{left:-9px;}
+  .perforation::after{right:-9px;}
+
+  .summary-row{display:flex; justify-content:space-between; font-size:0.9rem; color:var(--muted); margin-bottom:8px;}
+  .summary-row.total{color:var(--ink); font-weight:700; font-size:1.1rem; font-family:'Space Grotesk',sans-serif;}
+
+  .checkout-btn{
+    width:100%; margin-top:16px; padding:15px; border-radius:12px; border:none;
+    background:var(--ink); color:var(--paper); font-weight:600; font-size:0.98rem; cursor:pointer;
+    transition:transform .15s, box-shadow .15s;
+  }
+  .checkout-btn:hover:not(:disabled){transform:translateY(-2px); box-shadow:0 12px 24px rgba(20,18,31,0.25);}
+  .checkout-btn:disabled{opacity:0.4; cursor:not-allowed;}
+
+  .low-stock-note{font-size:0.78rem; color:#C0392B; margin-top:10px; text-align:center;}
+
+  .loading-block{color:var(--muted); font-size:0.9rem; padding:40px 0; text-align:center;}
+  .error-block{
+    max-width:640px; margin:60px auto; text-align:center; color:var(--muted);
+  }
+  .error-block h2{font-family:'Space Grotesk',sans-serif; color:var(--ink); margin-bottom:10px;}
+
+  .skeleton{background:linear-gradient(90deg, #ECE9FA 25%, #F5F3FF 37%, #ECE9FA 63%); background-size:400% 100%; animation:shimmer 1.4s ease infinite;}
+  @keyframes shimmer{0%{background-position:100% 0;} 100%{background-position:0 0;}}
+
+  @media (max-width:860px){
+    .event-layout{grid-template-columns:1fr;}
+    .ticket-panel{position:static;}
+    .banner{height:200px;}
+  }
+  :focus-visible{outline:2px solid var(--primary); outline-offset:2px;}
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} }

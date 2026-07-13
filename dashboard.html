@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+</head>
+<body>
+
+    <h1>Welcome to the Home Page</h1>
+    <p>This is the main landing page of the website.</p>
+
+    <nav>
+        <ul>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+        </ul>
+    </nav>
+
+    <h2>About Us</h2>
+    <p>We are a platform that connects people with events happening 
+        near them. Browse, register, and manage your events easily.
+    </p>
+
+    <h2>Contact</h2>
+    <p>If you have any questions, feel free to reach out to us at
+        <a href="mailto:support@nearby.com">support@nearby.com</a>.
+    </p>
+
+    <h1>Featured Events</h1>
+    <div class="event-list">
+        <div class="event-item">
+            <h3>Colchester Maker's Market</h3>
+            <p>📍 Colchester Castle Park</p>
+            <p>🕒 10:00 – 16:00</p>
+            <p>Free Entry</p>
+        </div>
+        <div class="event-item">
+            <h3>Local Music Festival</h3>
+            <p>📍 Central Park</p>
+            <p>🕒 12:00 – 22:00</p>
+            <p>Tickets from £10</p>
+        </div>
+        <div class="event-item">
+            <h3>Art & Craft Fair</h3>
+            <p>📍 Riverside Hall</p>
+            <p>🕒 09:00 – 17:00</p>
+            <p>Free Entry</p>
+        </div>
+    </div>
+
+    <dialog id="event-dialog">
+        <h2>Event Details</h2>
+        <p id="event-name">Event Name: </p>
+        <p id="event-location">Location: </p>
+        <p id="event-time">Time: </p>
+        <p id="event-price">Price: </p>
+        <button id="close-dialog">Close</button>
+    </dialog>
+
+    <div class="event-details">
+        <h2>Event Details</h2>
+        <p id="event-name">Event Name: </p>
+        <p id="event-location">Location: </p>
+        <p id="event-time">Time: </p>
+        <p id="event-price">Price: </p>
+    </div>
+
+    <h1>Testimonials</h1>
+    <div class="testimonials">
+        <div class="testimonial">
+            <p>"This platform made it so easy to find events in my area. Highly recommend!"</p>
+            <p>- Jane Doe</p>
+        </div>
+        <div class="testimonial">
+            <p>"I love how I can manage my events and see what's happening nearby."</p>
+            <p>- John Smith</p>
+        </div>
+    </div>
+
+    <h1>Newsletter Signup</h1>
+    <form id="newsletter-form">
+        <label for="newsletter-email">Email:</label>
+        <input type="email" id="newsletter-email" name="newsletter-email" required>
+        <button type="submit">Subscribe</button>
+    </form>
+
+ <h1>Follow Us</h1>
+    <div class="social-media">
+        <a href="https://facebook.com/nearby" target="_blank">Facebook</a>
+        <a href="https://twitter.com/nearby" target="_blank">Twitter</a>
+        <a href="https://instagram.com/nearby" target="_blank">Instagram</a>
+    </div>
+
+
+<script src="dashboard.js"></script>
+</body>
+</html>

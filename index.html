@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Events Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="style.css" rel="stylesheet">
+
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <div class="logo"><span class="dot"></span>Nearby</div>
+    <nav class="links">
+      <a href="browse.html">Browse</a>
+      <a href="categories.html">Categories</a>
+      <a href="organise.html">Organise an event</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="login.html" class="btn btn-ghost">Log in</a>
+      <a href="register.html" class="btn btn-primary">Sign up</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div>
+    <h1>Find things happening <span class="accent-underline">near you</span>, this week.</h1>
+    <p>Workshops, gigs, markets and meetups — browse what's on, grab a ticket, and get a confirmation in seconds.</p>
+
+    <form class="search-bar" id="search-form">
+      <input type="text" id="search-input" placeholder="Search events, venues, organisers…" aria-label="Search events">
+      <select id="category-select" aria-label="Filter by category">
+        <option value="">All categories</option>
+      </select>
+      <button type="submit">Search</button>
+    </form>
+
+    <div class="hero-stats">
+      <div><strong id="stat-events">—</strong>events live</div>
+      <div><strong id="stat-cities">—</strong>towns covered</div>
+      <div><strong>Free</strong>to list</div>
+    </div>
+  </div>
+
+  <div class="ticket-visual">
+    <div class="stub">
+      <div class="eyebrow">Featured · This Saturday</div>
+      <h3>Colchester Maker's Market</h3>
+      <div class="meta">
+        <span>📍 Colchester Castle Park</span>
+        <span>🕒 10:00 – 16:00</span>
+      </div>
+      <div class="perforation"></div>
+      <div class="price-row">
+        <div class="price">£<span>0</span></div>
+        <div class="qr"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="categories" id="category-chips">
+  <button class="chip active" data-category="">All</button>
+  <!-- more chips injected by JS -->
+</div>
+
+<section class="section">
+  <div class="section-head">
+    <h2>Happening soon</h2>
+    <a href="events.html">View all →</a>
+  </div>
+</section>
+
+<div class="grid" id="event-grid">
+  <!-- event cards injected here -->
+</div>
+
+<footer>
+  Built for a final year project · Nearby is a demo events marketplace.
+</footer>
+
+
+<script src="index.js"></script>
+</body>
+</html>

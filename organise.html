@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organise Events</title>
+    <link rel="stylesheet" href="organise.css">
+</head>
+<body>
+    
+    <header>
+        <div class="nav-inner">
+            <a class="logo" href="index.html"><span class="dot"></span>Nearby</a>
+            <a href="login.html" class="btn btn-ghost">Log in</a>
+        </div>
+    </header>
+
+    <div class="breadcrumb">
+        <a href="index.html">Home</a> / <span id="breadcrumb-title">Organise an Event</span>
+    </div>
+
+    <main id="page-content">
+        <h1>Organise an Event</h1>
+        <p>Fill out the form below to create your event.</p>
+
+        <form id="organise-form">
+            <label for="event-name">Event Name:</label>
+            <input type="text" id="event-name" name="event-name" required><br><br>
+
+            <label for="event-location">Location:</label>
+            <input type="text" id="event-location" name="event-location" required><br><br>
+
+            <label for="event-date">Date:</label>
+            <input type="date" id="event-date" name="event-date" required><br><br>
+
+            <label for="event-time">Time:</label>
+            <input type="time" id="event-time" name="event-time" required><br><br>
+
+            <label for="event-description">Description:</label><br>
+            <textarea id="event-description" name="event-description" rows="4" cols="50"></textarea><br><br>
+
+            <button type="submit" id="organise-event">Create Event</button>
+        </form>
+    </main>
+
+    <h2>Event Preview</h2>
+    <div id="event-preview">
+        <h3 id="preview-name">Event Name</h3>
+        <p id="preview-location">Location: </p>
+        <p id="preview-date">Date: </p>
+        <p id="preview-time">Time: </p>
+        <p id="preview-description">Description: </p>
+    </div>
+
+    <h2>Event QR Code</h2>
+    <div id="qr-code"></div>
+
+    <h1>Event Created!</h1>
+    <p>Your event has been successfully created. You can share the QR code above for attendees
+
+
+
+
+    <script src="organise.js"></script>
+    
+</body>
+</html>
