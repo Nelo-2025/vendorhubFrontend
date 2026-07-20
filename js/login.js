@@ -1,31 +1,62 @@
-document.getElementById('login-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+const usersKey = 'nearby_users';
 
-    // Perform login logic here, e.g., send data to server
-    console.log('Logging in user:', { email, password });
+function loadUsers() {
+  return JSON.parse(localStorage.getItem(usersKey) || '[]');
+}
+
+function showMessage(elementId, message, isError = false) {
+  const element = document.getElementById(elementId);
+  if (!element) return;
+  element.textContent = message;
+  element.classList.remove('hidden', 'success-box');
+  element.classList.add(isError ? 'notice' : 'success-box');
+}
+
+document.querySelectorAll('[data-toggle-password]').forEach((button) => {
+  button.addEventListener('click', () => {
+    const targetId = button.dataset.togglePassword;
+    const input = document.getElementById(targetId);
+    if (!input) return;
+
+    const shouldReveal = input.type === 'password';
+    input.type = shouldReveal ? 'text' : 'password';
+    button.textContent = shouldReveal ? 'Hide' : 'Show';
+  });
 });
 
-//  Clear the form fields after submission
-document.getElementById('email').value = '';
-document.getElementById('password').value = '';
-document.getElementById('login-form').reset();
+const loginForm = document.getElementById('login-form');
+if (loginForm) {
+  loginForm.addEventListener('submit', (event) => {
+    event.preventDefault();
 
-// validation and error handling logic
-if (!email || !password) {
-    alert('Please fill in all fields.');
-    return;
+    const email = document.getElementById('email').value.trim().toLowerCase();
+    const password = document.getElementById('password').value;
+
+    if (!email || !password) {
+      showMessage('login-message', 'Please fill in all fields.', true);
+      return;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      showMessage('login-message', 'Please enter a valid email address.', true);
+      return;
+    }
+
+    const users = loadUsers();
+    const matchedUser = users.find((user) => user.email === email && user.password === password);
+
+    if (!matchedUser) {
+      showMessage('login-message', 'Email or password is incorrect.', true);
+      return;
+    }
+
+    sessionStorage.setItem('nearby_current_user', JSON.stringify({ name: matchedUser.name, email: matchedUser.email }));
+    showMessage('login-message', 'Login successful. Redirecting…');
+    loginForm.reset();
+
+    window.setTimeout(() => {
+      window.location.href = 'index.html';
+    }, 700);
+  });
 }
-
-// You can also add more complex validation, such as checking email format or password strength, depending on your requirements.
-const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-if (!emailPattern.test(email)) {
-    alert('Please enter a valid email address.');
-    return;
-}
-
-// If all validations pass, proceed with login logic
-console.log('Logging in user:', { email, password });
-alert('Login successful!');
-window.location.href = 'index.html';

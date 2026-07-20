@@ -1,43 +1,74 @@
-document.getElementById('register-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+const baseurl = "http://localhost:3000";
+const usersKey = 'nearby_users';
 
-    // Perform registration logic here, e.g., send data to server
-    console.log('Registering user:', { name, email, password });
+function loadUsers() {
+  return JSON.parse(localStorage.getItem(usersKey) || '[]');
+}
+
+function saveUsers(users) {
+  localStorage.setItem(usersKey, JSON.stringify(users));
+}
+
+function showMessage(elementId, message, isError = false) {
+  const element = document.getElementById(elementId);
+  if (!element) return;
+  element.textContent = message;
+  element.classList.remove('hidden', 'success-box', 'notice');
+  element.classList.add(isError ? 'notice' : 'success-box');
+}
+
+document.querySelectorAll('[data-toggle-password]').forEach((button) => {
+  button.addEventListener('click', () => {
+    const targetId = button.dataset.togglePassword;
+    const input = document.getElementById(targetId);
+    if (!input) return;
+
+    const shouldReveal = input.type === 'password';
+    input.type = shouldReveal ? 'text' : 'password';
+    button.textContent = shouldReveal ? 'Hide' : 'Show';
+  });
 });
 
-    // Clear the form fields after submission
-    document.getElementById('name').value = '';
-    document.getElementById('email').value = '';
-    document.getElementById('password').value = '';
-    document.getElementById('register-form').reset();
+const registerForm = document.getElementById('register-form');
+if (registerForm) {
+  registerForm.addEventListener('submit', (event) => {
+    event.preventDefault();
 
-    // Display a success message or redirect the user to another page
-    alert('Registration successful!');
-    window.location.href = 'login.html';
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim().toLowerCase();
+    const password = document.getElementById('password').value;
 
-    // validation and error handling logic 
     if (!name || !email || !password) {
-        alert('Please fill in all fields.');
-        return;
+      showMessage('register-message', 'Please fill in all fields.', true);
+      return;
     }
 
-    // You can also add more complex validation, such as checking email format or password strength, depending on your requirements.
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
-        alert('Please enter a valid email address.');
-        return;
+      showMessage('register-message', 'Please enter a valid email address.', true);
+      return;
     }
 
     if (password.length < 6) {
-        alert('Password must be at least 6 characters long.');
-        return;
+      showMessage('register-message', 'Password must be at least 6 characters long.', true);
+      return;
     }
 
-    // If all validations pass, proceed with registration logic
-    console.log('Registering user:', {name, email, password });
-    alert('Registration successful!');
-    window.location.href = 'login.html';
+    const users = loadUsers();
+    if (users.some((user) => user.email === email)) {
+      showMessage('register-message', 'An account with this email already exists.', true);
+      return;
+    }
+
+    users.push({ name, email, password });
+    saveUsers(users);
+
+    showMessage('register-message', 'Account created successfully. You can now log in.');
+    registerForm.reset();
+
+    window.setTimeout(() => {
+      window.location.href = 'login.html';
+    }, 900);
+  });
+  }
 
