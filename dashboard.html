@@ -1,100 +1,283 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-    <link rel="stylesheet" href="css/style.css">
+
+    <title>VendorHub Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+
 </head>
+
 <body>
 
-    <h1>Welcome to the Home Page</h1>
-    <p>This is the main landing page of the website.</p>
+<div class="dashboard">
 
-    <nav>
-        <ul>
-            <li><a href="login.html">Login</a></li>
-            <li><a href="register.html">Register</a></li>
-            <li><a href="dashboard.html">Dashboard</a></li>
-        </ul>
-    </nav>
+    <!-- ================= Sidebar ================= -->
 
-    <h2>About Us</h2>
-    <p>We are a platform that connects people with events happening 
-        near them. Browse, register, and manage your events easily.
-    </p>
+    <div class="sidebar">
 
-    <h2>Contact</h2>
-    <p>If you have any questions, feel free to reach out to us at
-        <a href="mailto:support@nearby.com">support@nearby.com</a>.
-    </p>
+        <div class="logo">
 
-    <h1>Featured Events</h1>
-    <div class="event-list">
-        <div class="event-item">
-            <h3>Colchester Maker's Market</h3>
-            <p>📍 Colchester Castle Park</p>
-            <p>🕒 10:00 – 16:00</p>
-            <p>Free Entry</p>
+            <i class="fas fa-store"></i>
+
+            <h2>VendorHub</h2>
+
+            <p>Inventory Management</p>
+
         </div>
-        <div class="event-item">
-            <h3>Local Music Festival</h3>
-            <p>📍 Central Park</p>
-            <p>🕒 12:00 – 22:00</p>
-            <p>Tickets from £10</p>
-        </div>
-        <div class="event-item">
-            <h3>Art & Craft Fair</h3>
-            <p>📍 Riverside Hall</p>
-            <p>🕒 09:00 – 17:00</p>
-            <p>Free Entry</p>
-        </div>
+
+        <a href="dashboard.html" class="active">
+            <i class="fas fa-house"></i>
+            Dashboard
+        </a>
+
+        <a href="products.html">
+            <i class="fas fa-box"></i>
+            Products
+        </a>
+
+        <a href="customers.html">
+            <i class="fas fa-users"></i>
+            Customers
+        </a>
+
+        <a href="sales.html">
+            <i class="fas fa-cart-shopping"></i>
+            Sales
+        </a>
+
+        <a href="inventory.html">
+            <i class="fas fa-warehouse"></i>
+            Inventory
+        </a>
+
+        <a href="reports.html">
+            <i class="fas fa-chart-line"></i>
+            Reports
+        </a>
+
     </div>
 
-    <dialog id="event-dialog">
-        <h2>Event Details</h2>
-        <p id="event-name">Event Name: </p>
-        <p id="event-location">Location: </p>
-        <p id="event-time">Time: </p>
-        <p id="event-price">Price: </p>
-        <button id="close-dialog">Close</button>
-    </dialog>
+    <!-- ================= Main Content ================= -->
 
-    <div class="event-details">
-        <h2>Event Details</h2>
-        <p id="event-name">Event Name: </p>
-        <p id="event-location">Location: </p>
-        <p id="event-time">Time: </p>
-        <p id="event-price">Price: </p>
-    </div>
+    <div class="main-content">
 
-    <h1>Testimonials</h1>
-    <div class="testimonials">
-        <div class="testimonial">
-            <p>"This platform made it so easy to find events in my area. Highly recommend!"</p>
-            <p>- Jane Doe</p>
+        <div class="container">
+
+            <!-- Header -->
+
+            <div class="header">
+
+                <div>
+
+                    <h1>Dashboard</h1>
+
+                    <p>Welcome back! Here's an overview of your business.</p>
+
+                </div>
+
+            </div>
+
+            <!-- Statistics -->
+
+            <div class="card-container">
+
+                <div class="card">
+
+                    <h3>Total Products</h3>
+
+                    <h2 id="productCount">0</h2>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>Total Customers</h3>
+
+                    <h2 id="customerCount">0</h2>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>Total Sales</h3>
+
+                    <h2 id="salesCount">₦0</h2>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>Low Stock</h3>
+
+                    <h2 id="lowStock">0</h2>
+
+                </div>
+
+            </div>
+
+            <!-- Quick Actions -->
+
+            <div class="card">
+
+                <h2>Quick Actions</h2>
+
+                <br>
+
+                <a href="products.html">
+                    <button>Products</button>
+                </a>
+
+                <a href="customers.html">
+                    <button>Customers</button>
+                </a>
+
+                <a href="sales.html">
+                    <button>Sales</button>
+                </a>
+
+                <a href="inventory.html">
+                    <button>Inventory</button>
+                </a>
+
+            </div>
+
+            <br>
+
+            <!-- Sales Chart -->
+
+            <div class="card">
+
+                <h2>Sales Overview</h2>
+
+                <br>
+
+                <canvas id="salesChart" height="30"></canvas>
+
+            </div>
+
+            <br>
+
+            <!-- Recent Sales -->
+
+            <div class="card">
+
+                <h2>Recent Sales</h2>
+
+                <br>
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Customer</th>
+
+                            <th>Product</th>
+
+                            <th>Quantity</th>
+
+                            <th>Total</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="recentSalesTable">
+
+                        <tr>
+
+                            <td colspan="4" style="text-align:center;">
+
+                                No sales available.
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <br>
+
+            <!-- Low Stock -->
+
+            <div class="card">
+
+                <h2>Low Stock Products</h2>
+
+                <br>
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Product</th>
+
+                            <th>Stock</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="lowStockTable">
+
+                        <tr>
+
+                            <td colspan="2" style="text-align:center;">
+
+                                No low stock products.
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <br>
+
+            <footer>
+
+                <p><strong>VendorHub Inventory Management System</strong></p>
+
+                <br>
+
+                <p>Developed by Brown © 2026</p>
+
+            </footer>
+
         </div>
-        <div class="testimonial">
-            <p>"I love how I can manage my events and see what's happening nearby."</p>
-            <p>- John Smith</p>
-        </div>
+
     </div>
 
-    <h1>Newsletter Signup</h1>
-    <form id="newsletter-form">
-        <label for="newsletter-email">Email:</label>
-        <input type="email" id="newsletter-email" name="newsletter-email" required>
-        <button type="submit">Subscribe</button>
-    </form>
+</div>
 
- <h1>Follow Us</h1>
-    <div class="social-media">
-        <a href="https://facebook.com/nearby" target="_blank">Facebook</a>
-        <a href="https://twitter.com/nearby" target="_blank">Twitter</a>
-        <a href="https://instagram.com/nearby" target="_blank">Instagram</a>
-    </div>
+<!-- Chart.js -->
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<script src="dashboard.js"></script>
+<!-- Dashboard JavaScript -->
+
+<script src="js/dashboard.js"></script>
+
 </body>
+
 </html>

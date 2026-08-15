@@ -1,0 +1,1 @@
+// settings page script placeholder

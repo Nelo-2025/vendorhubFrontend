@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>VendorHub</title>
+    
+        <link rel="stylesheet" href="style.css">
+    
+        
+        <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+</head>
+
+<body>
+
+<div class="dashboard">
+<!-- Sidebar -->
+
+<div class="sidebar">
+
+    <div class="logo">
+
+        <i class="fas fa-store"></i>
+
+        <h2>VendorHub</h2>
+
+        <p>Inventory Management</p>
+
+    </div>
+
+    <a href="dashboard.html">
+        <i class="fas fa-house"></i>
+        Dashboard
+    </a>
+
+    <a href="products.html">
+        <i class="fas fa-box"></i>
+        Products
+    </a>
+
+    <a href="customers.html">
+        <i class="fas fa-users"></i>
+        Customers
+    </a>
+
+    <a href="sales.html">
+        <i class="fas fa-cart-shopping"></i>
+        Sales
+    </a>
+
+    <a href="inventory.html">
+        <i class="fas fa-warehouse"></i>
+        Inventory
+    </a>
+
+    <a href="reports.html" class="active">
+        <i class="fas fa-chart-line"></i>
+        Reports
+    </a>
+
+</div>
+
+    <!-- Main Content -->
+
+    <div class="main-content">
+
+        <div class="container">
+
+            <div class="header">
+
+                <div>
+                    <h1>Reports</h1>
+                    <p>Business performance and sales summary.</p>
+                </div>
+
+            </div>
+
+            <!-- Summary Cards -->
+
+            <div class="card-container">
+
+                <div class="card">
+                    <h3>Total Revenue</h3>
+                    <h2 id="totalRevenue">₦0</h2>
+                </div>
+
+                <div class="card">
+                    <h3>Total Sales</h3>
+                    <h2 id="totalSales">0</h2>
+                </div>
+
+                <div class="card">
+                    <h3>Total Products Sold</h3>
+                    <h2 id="productsSold">0</h2>
+                </div>
+
+            </div>
+
+            <!-- Report Table -->
+
+            <div class="card">
+
+                <h2>Sales Report</h2>
+
+                <br>
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+                            <th>Customer</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th>Date</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="reportTable">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+
+    VendorHub Inventory System
+
+    <br><br>
+
+    Developed by Brown © 2026
+
+</footer>
+
+<script src="js/reports.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>VendorHub</title>
+    
+        <link rel="stylesheet" href="style.css">
+    
+        
+        <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<!-- Sidebar -->
+
+<div class="sidebar">
+
+    <div class="logo">
+
+        <i class="fas fa-store"></i>
+
+        <h2>VendorHub</h2>
+
+        <p>Inventory Management</p>
+
+    </div>
+
+    <a href="dashboard.html">
+        <i class="fas fa-house"></i>
+        Dashboard
+    </a>
+
+    <a href="products.html">
+        <i class="fas fa-box"></i>
+        Products
+    </a>
+
+    <a href="customers.html">
+        <i class="fas fa-users"></i>
+        Customers
+    </a>
+
+    <a href="sales.html">
+        <i class="fas fa-cart-shopping"></i>
+        Sales
+    </a>
+
+    <a href="inventory.html" class="active">
+        <i class="fas fa-warehouse"></i>
+        Inventory
+    </a>
+
+    <a href="reports.html">
+        <i class="fas fa-chart-line"></i>
+        Reports
+    </a>
+
+</div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <div class="container">
+
+            <div class="header">
+
+                <div>
+                    <h1>Inventory Management</h1>
+                    <p>Monitor stock levels and restock products.</p>
+                </div>
+
+            </div>
+
+            <!-- Search -->
+
+            <div class="card">
+
+                <h2>Search Products</h2>
+
+                <br>
+
+                <input
+                    type="text"
+                    id="searchInventory"
+                    placeholder="Search by product name..."
+                >
+
+            </div>
+
+            <br>
+
+            <!-- Inventory Table -->
+
+            <div class="card">
+
+                <h2>Inventory List</h2>
+
+                <br>
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Price (₦)</th>
+                            <th>Stock</th>
+                            <th>Status</th>
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="inventoryTable">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Restock Modal -->
+
+<div
+    id="restockModal"
+    class="modal"
+    style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);">
+
+    <h2>Restock Product</h2>
+
+    <br>
+
+    <input
+        type="hidden"
+        id="productId"
+    >
+
+    <label>Quantity</label>
+
+    <input
+        type="number"
+        id="restockQty"
+        min="1"
+    >
+
+    <br><br>
+
+    <button id="updateStockBtn">
+        Update Stock
+    </button>
+
+    <button
+        onclick="document.getElementById('restockModal').style.display='none';">
+        Cancel
+    </button>
+
+</div>
+
+<footer>
+
+    VendorHub Inventory System
+
+    <br><br>
+
+    Developed by Brown © 2026
+
+</footer>
+
+<script src="js/inventory.js"></script>
+
+</body>
+</html>

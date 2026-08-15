@@ -1,0 +1,412 @@
+/* ==========================
+   VendorHub Global Styles
+========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+    color:#333;
+}
+
+/* ==========================
+   DASHBOARD LAYOUT
+========================== */
+
+.dashboard{
+    display:flex;
+    min-height:100vh;
+}
+
+/* ==========================
+   SIDEBAR
+========================== */
+
+.sidebar{
+    width:250px;
+    background:#1e3a8a;
+    color:#fff;
+    position:fixed;
+    top:0;
+    left:0;
+    height:100%;
+    padding-top:30px;
+}
+
+.sidebar h2{
+    text-align:center;
+    margin-bottom:40px;
+    font-size:28px;
+}
+
+.sidebar a{
+    display:block;
+    color:#fff;
+    text-decoration:none;
+    padding:16px 25px;
+    transition:.3s;
+    font-size:16px;
+}
+
+.sidebar a:hover{
+    background:#2563eb;
+}
+
+/* ==========================
+   MAIN CONTENT
+========================== */
+
+.main-content{
+    margin-left:250px;
+    width:calc(100% - 250px);
+    padding:30px;
+}
+
+/* ==========================
+   PAGE CONTAINER
+========================== */
+
+.container{
+    width:100%;
+}
+
+/* ==========================
+   HEADINGS
+========================== */
+
+h1{
+    color:#2563eb;
+    margin-bottom:15px;
+}
+
+h2{
+    margin-bottom:20px;
+}
+
+p{
+    margin-bottom:20px;
+}
+
+/* ==========================
+   CARDS
+========================== */
+
+.card-container{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-bottom:30px;
+}
+
+.card{
+    background:#fff;
+    flex:1;
+    min-width:220px;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 12px 25px rgba(0,0,0,.15);
+}
+
+.card h3{
+    color:#666;
+    margin-bottom:15px;
+}
+
+.card h2{
+    color:#2563eb;
+    font-size:34px;
+    margin-top:10px;
+}
+
+.card p{
+    margin:15px 0;
+    color:#555;
+}
+
+/* ==========================
+   INPUTS
+========================== */
+
+input,
+select{
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+    border:1px solid #ccc;
+    border-radius:6px;
+    outline:none;
+}
+
+input:focus,
+select:focus{
+    border-color:#2563eb;
+}
+
+/* ==========================
+   BUTTONS
+========================== */
+
+button{
+    padding:10px 18px;
+    border:none;
+    border-radius:6px;
+    background:#2563eb;
+    color:#fff;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+/* ==========================
+   TABLES
+========================== */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:#fff;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+    margin-top:20px;
+}
+
+th{
+    background:#2563eb;
+    color:#fff;
+    padding:14px;
+}
+
+td{
+    padding:12px;
+    border-bottom:1px solid #eee;
+}
+
+tr:hover{
+    background:#f9fafb;
+}
+
+/* ==========================
+   STATUS
+========================== */
+
+.low-stock{
+    color:#dc2626;
+    font-weight:bold;
+}
+
+.in-stock{
+    color:#16a34a;
+    font-weight:bold;
+}
+
+/* ==========================
+   SEARCH
+========================== */
+
+.search-box{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+/* ==========================
+   MODAL
+========================== */
+
+.modal{
+    background:#fff;
+    width:400px;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media(max-width:768px){
+
+    .sidebar{
+        width:70px;
+    }
+
+    .sidebar h2{
+        font-size:16px;
+    }
+
+    .sidebar a{
+        font-size:12px;
+        padding:15px 8px;
+        text-align:center;
+    }
+
+    .main-content{
+        margin-left:70px;
+        width:calc(100% - 70px);
+        padding:20px;
+    }
+
+    .card-container{
+        flex-direction:column;
+    }
+}
+
+/* ==========================
+   LOGO
+========================== */
+
+.logo{
+    text-align:center;
+    padding:25px 15px;
+    border-bottom:1px solid rgba(255,255,255,.15);
+    margin-bottom:20px;
+}
+
+.logo i{
+    font-size:50px;
+    color:#60a5fa;
+    margin-bottom:10px;
+}
+
+.logo h2{
+    color:#fff;
+    margin-top:10px;
+    margin-bottom:5px;
+}
+
+.logo p{
+    color:#cbd5e1;
+    font-size:14px;
+}
+
+/* Sidebar Links */
+
+.sidebar a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:#fff;
+    text-decoration:none;
+    padding:15px 20px;
+    transition:.3s;
+}
+
+.sidebar a:hover{
+    background:#2563eb;
+}
+
+.sidebar a.active{
+    background:#2563eb;
+    border-left:5px solid white;
+    font-weight:bold;
+}
+
+/* Header */
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.header p{
+    color:#777;
+}
+
+/* Footer */
+
+footer{
+    text-align:center;
+    margin-top:50px;
+    color:#777;
+    font-size:14px;
+    padding:20px;
+    border-top:1px solid #ddd;
+}
+
+/* Card Animation */
+
+.card{
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 12px 30px rgba(0,0,0,.15);
+}
+
+/* Buttons */
+
+button{
+    transition:.3s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+    .sidebar{
+
+        width:70px;
+
+    }
+
+    .sidebar .logo p,
+    .sidebar .logo h2{
+
+        display:none;
+
+    }
+
+    .sidebar a{
+
+        justify-content:center;
+        padding:18px;
+
+    }
+
+    .sidebar a i{
+
+        margin:0;
+
+    }
+
+    .sidebar a{
+
+        font-size:0;
+
+    }
+
+    .sidebar a i{
+
+        font-size:18px;
+
+    }
+
+    .main-content{
+
+        margin-left:70px;
+        width:calc(100% - 70px);
+
+    }
+
+}

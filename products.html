@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>VendorHub</title>
+    
+        <link rel="stylesheet" href="style.css">
+    
+        
+        <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+</head>
+
+<body>
+
+<div class="dashboard">
+<!-- Sidebar -->
+
+<div class="sidebar">
+
+    <div class="logo">
+
+        <i class="fas fa-store"></i>
+
+        <h2>VendorHub</h2>
+
+        <p>Inventory Management</p>
+
+    </div>
+
+    <a href="dashboard.html">
+        <i class="fas fa-house"></i>
+        Dashboard
+    </a>
+
+    <a href="products.html" class="active">
+        <i class="fas fa-box"></i>
+        Products
+    </a>
+
+    <a href="customers.html">
+        <i class="fas fa-users"></i>
+        Customers
+    </a>
+
+    <a href="sales.html">
+        <i class="fas fa-cart-shopping"></i>
+        Sales
+    </a>
+
+    <a href="inventory.html">
+        <i class="fas fa-warehouse"></i>
+        Inventory
+    </a>
+
+    <a href="reports.html">
+        <i class="fas fa-chart-line"></i>
+        Reports
+    </a>
+
+</div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <div class="container">
+
+            <div class="header">
+
+                <div>
+                    <h1>Products</h1>
+                    <p>Manage all products available in your inventory.</p>
+                </div>
+
+                <div>
+                    <button id="addBtn">
+                        + Add Product
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Product Form -->
+
+            <div id="productForm" class="card">
+
+                <h2>Add New Product</h2>
+
+                <br>
+
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Product Name"
+                >
+
+                <input
+                    type="text"
+                    id="category"
+                    placeholder="Category"
+                >
+
+                <input
+                    type="number"
+                    id="price"
+                    placeholder="Price (₦)"
+                >
+
+                <input
+                    type="number"
+                    id="stock"
+                    placeholder="Stock Quantity"
+                >
+
+                <br><br>
+
+                <button id="saveBtn">
+                    Save Product
+                </button>
+
+            </div>
+
+            <br>
+
+            <!-- Product Table -->
+
+            <div class="card">
+
+                <h2>Product List</h2>
+
+                <br>
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Price (₦)</th>
+                            <th>Stock</th>
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="productTable">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+
+    VendorHub Inventory System
+
+    <br><br>
+
+    Developed by Brown © 2026
+
+</footer>
+
+<script src="js/products.js"></script>
+
+</body>
+</html>
