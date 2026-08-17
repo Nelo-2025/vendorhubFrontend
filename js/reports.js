@@ -16,18 +16,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function loadReports() {
 
-    fetch("../vendorhub-back/get_reports.php")
+    fetch("../vendorhub-back/get_reports.php", { credentials: "same-origin" })
         .then(res => res.json())
         .then(data => {
 
-            totalSales.innerHTML = data.totalSales;
-            totalRevenue.innerHTML = "₦" + data.totalRevenue;
-            productsSold.innerHTML = data.productsSold;
+            totalSales.innerHTML = data.totalSales ?? 0;
+            totalRevenue.innerHTML = "₦" + (data.totalRevenue ?? "0.00");
+            productsSold.innerHTML = data.productsSold ?? 0;
+
+            const empty = document.getElementById("reportEmpty");
+            const wrap = document.getElementById("reportTableWrap");
+            const sales = Array.isArray(data.sales) ? data.sales : [];
+
+            reportTable.innerHTML = "";
+
+            if (sales.length === 0) {
+                empty.hidden = false;
+                wrap.hidden = true;
+                return;
+            }
+
+            empty.hidden = true;
+            wrap.hidden = false;
 
             let html = "";
 
-            data.sales.forEach(sale => {
-
+            sales.forEach(sale => {
                 html += `
                 <tr>
                     <td>${sale.id}</td>
@@ -38,11 +52,11 @@ function loadReports() {
                     <td>${sale.sale_date}</td>
                 </tr>
                 `;
-
             });
 
             reportTable.innerHTML = html;
 
-        });
+        })
+        .catch(error => console.error(error));
 
 }

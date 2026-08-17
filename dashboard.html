@@ -9,6 +9,11 @@
 
     <title>VendorHub Dashboard</title>
 
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+
     <link rel="stylesheet" href="style.css">
 
     <link rel="stylesheet"
@@ -24,14 +29,12 @@
 
     <div class="sidebar">
 
-        <div class="logo">
-
-            <i class="fas fa-store"></i>
-
-            <h2>VendorHub</h2>
-
-            <p>Inventory Management</p>
-
+                <div class="logo">
+            <img class="brand-mark" src="assets/logo.png" alt="VendorHub logo" width="44" height="44">
+            <div class="brand-text">
+                <h2>VendorHub</h2>
+                <p>Inventory</p>
+            </div>
         </div>
 
         <a href="dashboard.html" class="active">
@@ -64,6 +67,17 @@
             Reports
         </a>
 
+    
+    <a href="settings.html">
+        <i class="fas fa-gear"></i>
+        Settings
+    </a>
+
+<a href="#" class="logout-link" onclick="logoutUser(); return false;">
+        <i class="fas fa-right-from-bracket"></i>
+        Logout
+    </a>
+
     </div>
 
     <!-- ================= Main Content ================= -->
@@ -72,197 +86,165 @@
 
         <div class="container">
 
-            <!-- Header -->
+            <!-- Welcome -->
 
-            <div class="header">
-
+            <div class="welcome-banner">
                 <div>
-
                     <h1>Dashboard</h1>
-
-                    <p>Welcome back! Here's an overview of your business.</p>
-
+                    <p>Welcome, <strong id="userName">User</strong> — here's an overview of your business.</p>
                 </div>
-
+                <div class="quick-actions">
+                    <a href="products.html"><button type="button">Products</button></a>
+                    <a href="customers.html"><button type="button">Customers</button></a>
+                    <a href="sales.html"><button type="button">Sales</button></a>
+                    <a href="inventory.html"><button type="button">Inventory</button></a>
+                </div>
             </div>
 
             <!-- Statistics -->
 
-            <div class="card-container">
+            <div class="stat-strip card-container">
 
                 <div class="card">
-
                     <h3>Total Products</h3>
-
                     <h2 id="productCount">0</h2>
-
                 </div>
 
                 <div class="card">
-
                     <h3>Total Customers</h3>
-
                     <h2 id="customerCount">0</h2>
-
                 </div>
 
                 <div class="card">
-
                     <h3>Total Sales</h3>
-
                     <h2 id="salesCount">₦0</h2>
-
                 </div>
 
                 <div class="card">
-
                     <h3>Low Stock</h3>
-
                     <h2 id="lowStock">0</h2>
-
                 </div>
 
             </div>
 
-            <!-- Quick Actions -->
+            <!-- Analytics -->
 
-            <div class="card">
+            <div class="analytics-row">
 
-                <h2>Quick Actions</h2>
+                <div class="card analytics-card">
+                    <h2>This week vs last week</h2>
+                    <div class="week-compare">
+                        <div>
+                            <p class="analytics-label">Last 7 days</p>
+                            <p class="analytics-value" id="weekThis">₦0</p>
+                        </div>
+                        <div>
+                            <p class="analytics-label">Previous 7 days</p>
+                            <p class="analytics-value" id="weekLast">₦0</p>
+                        </div>
+                        <div>
+                            <p class="analytics-label">Change</p>
+                            <p class="analytics-value" id="weekChange">—</p>
+                        </div>
+                    </div>
+                </div>
 
-                <br>
-
-                <a href="products.html">
-                    <button>Products</button>
-                </a>
-
-                <a href="customers.html">
-                    <button>Customers</button>
-                </a>
-
-                <a href="sales.html">
-                    <button>Sales</button>
-                </a>
-
-                <a href="inventory.html">
-                    <button>Inventory</button>
-                </a>
-
-            </div>
-
-            <br>
-
-            <!-- Sales Chart -->
-
-            <div class="card">
-
-                <h2>Sales Overview</h2>
-
-                <br>
-
-                <canvas id="salesChart" height="30"></canvas>
-
-            </div>
-
-            <br>
-
-            <!-- Recent Sales -->
-
-            <div class="card">
-
-                <h2>Recent Sales</h2>
-
-                <br>
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-
-                            <th>Customer</th>
-
-                            <th>Product</th>
-
-                            <th>Quantity</th>
-
-                            <th>Total</th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody id="recentSalesTable">
-
-                        <tr>
-
-                            <td colspan="4" style="text-align:center;">
-
-                                No sales available.
-
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
+                <div class="card analytics-card">
+                    <h2>Stock health</h2>
+                    <div class="stock-health">
+                        <div class="stock-health-item">
+                            <span class="stock-dot stock-dot-ok"></span>
+                            <div>
+                                <p class="analytics-label">In stock</p>
+                                <p class="analytics-value" id="stockIn">0</p>
+                            </div>
+                        </div>
+                        <div class="stock-health-item">
+                            <span class="stock-dot stock-dot-low"></span>
+                            <div>
+                                <p class="analytics-label">Low stock</p>
+                                <p class="analytics-value" id="stockLow">0</p>
+                            </div>
+                        </div>
+                        <div class="stock-health-item">
+                            <span class="stock-dot stock-dot-out"></span>
+                            <div>
+                                <p class="analytics-label">Out of stock</p>
+                                <p class="analytics-value" id="stockOut">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
 
-            <br>
+            <!-- Chart + side panels -->
 
-            <!-- Low Stock -->
+            <div class="dashboard-grid">
 
-            <div class="card">
+                <div class="card">
+                    <h2>Revenue — last 7 days</h2>
+                    <br>
+                    <div class="chart-container">
+                        <canvas id="salesChart"></canvas>
+                    </div>
+                </div>
 
-                <h2>Low Stock Products</h2>
+                <div class="dashboard-side">
 
-                <br>
+                    <div class="card">
+                        <h2>Top products</h2>
+                        <br>
+                        <div id="topProductsList" class="rank-list">
+                            <p class="muted">No sales data yet.</p>
+                        </div>
+                    </div>
 
-                <table>
+                    <div class="card">
+                        <h2>Recent Sales</h2>
+                        <br>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Customer</th>
+                                    <th>Product</th>
+                                    <th>Qty</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentSalesTable">
+                                <tr>
+                                    <td colspan="4" style="text-align:center;">No sales available.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-                    <thead>
+                    <div class="card">
+                        <h2>Low Stock</h2>
+                        <br>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Stock</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lowStockTable">
+                                <tr>
+                                    <td colspan="2" style="text-align:center;">No low stock products.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-                        <tr>
-
-                            <th>Product</th>
-
-                            <th>Stock</th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody id="lowStockTable">
-
-                        <tr>
-
-                            <td colspan="2" style="text-align:center;">
-
-                                No low stock products.
-
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
+                </div>
 
             </div>
-
-            <br>
 
             <footer>
-
                 <p><strong>VendorHub Inventory Management System</strong></p>
-
-                <br>
-
-                <p>Developed by Brown © 2026</p>
-
-            </footer>
+</footer>
 
         </div>
 
@@ -271,6 +253,8 @@
 </div>
 
 <!-- Chart.js -->
+
+<script src="js/auth.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 

@@ -1,92 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
- <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>VendorHub</title>
-    
-        <link rel="stylesheet" href="style.css">
-    
-        <!-- Font Awesome -->
-        <link rel="stylesheet"
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales | VendorHub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
-    </head>
-
+</head>
 <body>
 
 <div class="dashboard">
 
-   <!-- Sidebar -->
-
 <div class="sidebar">
-
     <div class="logo">
-
-        <i class="fas fa-store"></i>
-
-        <h2>VendorHub</h2>
-
-        <p>Inventory Management</p>
-
+        <img class="brand-mark" src="assets/logo.png" alt="VendorHub logo" width="44" height="44">
+        <div class="brand-text">
+            <h2>VendorHub</h2>
+            <p>Inventory</p>
+        </div>
     </div>
 
-    <a href="dashboard.html">
-        <i class="fas fa-house"></i>
-        Dashboard
+    <a href="dashboard.html"><i class="fas fa-house"></i> Dashboard</a>
+    <a href="products.html"><i class="fas fa-box"></i> Products</a>
+    <a href="customers.html"><i class="fas fa-users"></i> Customers</a>
+    <a href="sales.html" class="active"><i class="fas fa-cart-shopping"></i> Sales</a>
+    <a href="inventory.html"><i class="fas fa-warehouse"></i> Inventory</a>
+    <a href="reports.html"><i class="fas fa-chart-line"></i> Reports</a>
+    <a href="settings.html"><i class="fas fa-gear"></i> Settings</a>
+    <a href="#" class="logout-link" onclick="logoutUser(); return false;">
+        <i class="fas fa-right-from-bracket"></i> Logout
     </a>
-
-    <a href="products.html">
-        <i class="fas fa-box"></i>
-        Products
-    </a>
-
-    <a href="customers.html">
-        <i class="fas fa-users"></i>
-        Customers
-    </a>
-
-    <a href="sales.html" class="active">
-        <i class="fas fa-cart-shopping"></i>
-        Sales
-    </a>
-
-    <a href="inventory.html">
-        <i class="fas fa-warehouse"></i>
-        Inventory
-    </a>
-
-    <a href="reports.html">
-        <i class="fas fa-chart-line"></i>
-        Reports
-    </a>
-
 </div>
 
-    <!-- Main Content -->
-    <div class="main-content">
+<div class="main-content">
+    <div class="container">
 
-        <div class="container">
+        <div class="header">
+            <div>
+                <h1>Sales</h1>
+                <p>Review transactions. Record a new sale with the button on the right.</p>
+            </div>
+            <div class="header-actions">
+                <span class="sales-count-chip">Sales: <strong id="salesCount">0</strong></span>
+                <button id="addSaleBtn" type="button" class="btn-add">
+                    <i class="fas fa-plus"></i> New Sale
+                </button>
+            </div>
+        </div>
 
-            <div class="header">
+        <div class="card table-card">
+            <h2>Recent Sales</h2>
+            <br>
 
-                <div>
-                    <h1>Sales Management</h1>
-                    <p>Create sales and monitor recent transactions.</p>
+            <div id="salesEmpty" class="product-empty-state table-empty" hidden>
+                <div class="product-empty-icon">
+                    <i class="fas fa-cart-shopping"></i>
                 </div>
-
-                <div>
-                    <h2 id="salesCount">0</h2>
-                </div>
-
+                <h3>No sales yet</h3>
+                <p>You have not recorded any sales. Click <strong>New Sale</strong> at the top right to create your first transaction.</p>
+                <button type="button" id="emptyAddSaleBtn" class="btn-add">
+                    <i class="fas fa-plus"></i> New Sale
+                </button>
             </div>
 
-            <!-- Sale Form -->
+            <div id="salesTableWrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Customer</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="salesTable"></tbody>
+                </table>
+            </div>
+        </div>
 
-            <div class="card">
-
-                <h2>New Sale</h2>
-
-                <br>
+        <div id="saleModal" class="product-modal" hidden>
+            <div class="product-modal-backdrop" id="saleModalBackdrop"></div>
+            <div class="product-modal-panel card" id="saleForm">
+                <div class="product-modal-header">
+                    <h2>New Sale</h2>
+                    <button type="button" class="modal-close" id="closeSaleFormBtn" aria-label="Close">
+                        <i class="fas fa-xmark"></i>
+                    </button>
+                </div>
 
                 <label>Customer</label>
                 <select id="customer"></select>
@@ -103,65 +111,21 @@
                 <label>Total (₦)</label>
                 <input type="text" id="total" readonly>
 
-                <br><br>
-
-                <button id="saveSaleBtn">
-                    Record Sale
-                </button>
-
+                <div class="product-modal-actions">
+                    <button type="button" id="cancelSaleBtn" class="btn-secondary">Cancel</button>
+                    <button type="button" id="saveSaleBtn">Record Sale</button>
+                </div>
             </div>
-
-            <br>
-
-            <!-- Recent Sales -->
-
-            <div class="card">
-
-                <h2>Recent Sales</h2>
-
-                <br>
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-
-                            <th>ID</th>
-                            <th>Customer</th>
-                            <th>Product</th>
-                            <th>Quantity</th>
-                            <th>Total</th>
-                            <th>Date</th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody id="salesTable">
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
         </div>
 
     </div>
+</div>
 
 </div>
 
-<footer>
+<footer>VendorHub Inventory System</footer>
 
-    VendorHub Inventory System
-
-    <br><br>
-
-    Developed by Brown © 2026
-
-</footer>
-
+<script src="js/auth.js"></script>
 <script src="js/sales.js"></script>
 
 </body>

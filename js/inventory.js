@@ -27,152 +27,109 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-
-// =============================
-// LOAD INVENTORY
-// =============================
 function loadInventory() {
 
-    fetch("../vendorhub-back/get_inventory.php")
+    fetch("../vendorhub-back/get_inventory.php", { credentials: "same-origin" })
+        .then(response => response.json())
+        .then(products => {
 
-    .then(response => response.json())
+            const empty = document.getElementById("inventoryEmpty");
+            const wrap = document.getElementById("inventoryTableWrap");
 
-    .then(products => {
+            inventoryTable.innerHTML = "";
 
-        let html = "";
-
-        products.forEach(product => {
-
-            let status = "";
-
-            if (product.stock == 0) {
-
-                status =
-                "<span style='color:red'>Out of Stock</span>";
-
-            } else if (product.stock <= 5) {
-
-                status =
-                "<span style='color:orange'>Low Stock</span>";
-
-            } else {
-
-                status =
-                "<span style='color:green'>In Stock</span>";
-
+            if (!Array.isArray(products) || products.length === 0) {
+                empty.hidden = false;
+                wrap.hidden = true;
+                return;
             }
 
-            html += `
-            <tr>
+            empty.hidden = true;
+            wrap.hidden = false;
 
-                <td>${product.id}</td>
+            let html = "";
 
-                <td>${product.name}</td>
+            products.forEach((product, index) => {
 
-                <td>${product.category}</td>
+                let status = "";
 
-                <td>₦${product.price}</td>
+                if (product.stock == 0) {
+                    status = "<span class='low-stock'>Out of Stock</span>";
+                } else if (product.stock <= 5) {
+                    status = "<span class='low-stock'>Low Stock</span>";
+                } else {
+                    status = "<span class='in-stock'>In Stock</span>";
+                }
 
-                <td>${product.stock}</td>
+                html += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${product.name}</td>
+                    <td>${product.category}</td>
+                    <td>₦${product.price}</td>
+                    <td>${product.stock}</td>
+                    <td>${status}</td>
+                    <td>
+                        <button type="button" onclick="showRestock(${product.id})">
+                            Restock
+                        </button>
+                    </td>
+                </tr>
+                `;
 
-                <td>${status}</td>
+            });
 
-                <td>
+            inventoryTable.innerHTML = html;
 
-                    <button onclick="showRestock(${product.id})">
-                        Restock
-                    </button>
-
-                </td>
-
-            </tr>
-            `;
-
+        })
+        .catch(error => {
+            console.error("Inventory Error:", error);
         });
 
-        inventoryTable.innerHTML = html;
-
-    })
-
-    .catch(error => {
-        console.error("Inventory Error:", error);
-    });
-
 }
 
-
-// =============================
-// SHOW RESTOCK MODAL
-// =============================
 function showRestock(id) {
-
     productId.value = id;
-
     restockQty.value = "";
-
     restockModal.style.display = "block";
-
 }
 
-
-// =============================
-// RESTOCK PRODUCT
-// =============================
 function restockProduct() {
 
     const data = new FormData();
-
     data.append("id", productId.value);
     data.append("quantity", restockQty.value);
 
     fetch("../vendorhub-back/restock_products.php", {
-
         method: "POST",
-        body: data
-
+        body: data,
+        credentials: "same-origin"
     })
+        .then(response => response.json())
+        .then(data => {
 
-    .then(response => response.json())
+            alert(data.message);
 
-    .then(data => {
+            if (data.success) {
+                restockModal.style.display = "none";
+                loadInventory();
+            }
 
-        alert(data.message);
-
-        if (data.success) {
-
-            restockModal.style.display = "none";
-
-            loadInventory();
-
-        }
-
-    })
-
-    .catch(error => {
-        console.error(error);
-    });
+        })
+        .catch(error => {
+            console.error(error);
+        });
 
 }
 
-
-// =============================
-// SEARCH INVENTORY
-// =============================
 function searchInventory() {
 
-    let keyword =
-    searchInventoryInput.value.toLowerCase();
-
-    let rows =
-    inventoryTable.getElementsByTagName("tr");
+    let keyword = searchInventoryInput.value.toLowerCase();
+    let rows = inventoryTable.getElementsByTagName("tr");
 
     for (let row of rows) {
-
         row.style.display =
-            row.innerText.toLowerCase().includes(keyword)
-            ? ""
-            : "none";
-
+            row.innerText.toLowerCase().includes(keyword) ? "" : "none";
     }
 
 }

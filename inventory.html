@@ -5,7 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>VendorHub</title>
     
-        <link rel="stylesheet" href="style.css">
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+
+    <link rel="stylesheet" href="style.css">
     
         
         <link rel="stylesheet"
@@ -20,15 +25,13 @@
 
 <div class="sidebar">
 
-    <div class="logo">
-
-        <i class="fas fa-store"></i>
-
-        <h2>VendorHub</h2>
-
-        <p>Inventory Management</p>
-
-    </div>
+            <div class="logo">
+            <img class="brand-mark" src="assets/logo.png" alt="VendorHub logo" width="44" height="44">
+            <div class="brand-text">
+                <h2>VendorHub</h2>
+                <p>Inventory</p>
+            </div>
+        </div>
 
     <a href="dashboard.html">
         <i class="fas fa-house"></i>
@@ -60,6 +63,17 @@
         Reports
     </a>
 
+    
+    <a href="settings.html">
+        <i class="fas fa-gear"></i>
+        Settings
+    </a>
+
+<a href="#" class="logout-link" onclick="logoutUser(); return false;">
+        <i class="fas fa-right-from-bracket"></i>
+        Logout
+    </a>
+
 </div>
 
     <!-- Main Content -->
@@ -70,8 +84,16 @@
             <div class="header">
 
                 <div>
-                    <h1>Inventory Management</h1>
+                    <h1>Inventory</h1>
                     <p>Monitor stock levels and restock products.</p>
+                </div>
+
+                <div>
+                    <a href="products.html">
+                        <button type="button" class="btn-add">
+                            <i class="fas fa-plus"></i> Add Product
+                        </button>
+                    </a>
                 </div>
 
             </div>
@@ -96,35 +118,42 @@
 
             <!-- Inventory Table -->
 
-            <div class="card">
+            <div class="card table-card">
 
                 <h2>Inventory List</h2>
 
                 <br>
 
-                <table>
+                <div id="inventoryEmpty" class="product-empty-state table-empty" hidden>
+                    <div class="product-empty-icon">
+                        <i class="fas fa-warehouse"></i>
+                    </div>
+                    <h3>No inventory yet</h3>
+                    <p>You have no products in stock to manage. Add products first, then return here to track and restock them.</p>
+                    <a href="products.html">
+                        <button type="button" class="btn-add">
+                            <i class="fas fa-plus"></i> Add Product
+                        </button>
+                    </a>
+                </div>
 
-                    <thead>
-
-                        <tr>
-
-                            <th>ID</th>
-                            <th>Product</th>
-                            <th>Category</th>
-                            <th>Price (₦)</th>
-                            <th>Stock</th>
-                            <th>Status</th>
-                            <th>Action</th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody id="inventoryTable">
-
-                    </tbody>
-
-                </table>
+                <div id="inventoryTableWrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Product</th>
+                                <th>Category</th>
+                                <th>Price (₦)</th>
+                                <th>Stock</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventoryTable">
+                        </tbody>
+                    </table>
+                </div>
 
             </div>
 
@@ -174,12 +203,9 @@
 <footer>
 
     VendorHub Inventory System
-
-    <br><br>
-
-    Developed by Brown © 2026
-
 </footer>
+
+<script src="js/auth.js"></script>
 
 <script src="js/inventory.js"></script>
 

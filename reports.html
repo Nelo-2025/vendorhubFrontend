@@ -5,7 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>VendorHub</title>
     
-        <link rel="stylesheet" href="style.css">
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+
+    <link rel="stylesheet" href="style.css">
     
         
         <link rel="stylesheet"
@@ -19,15 +24,13 @@
 
 <div class="sidebar">
 
-    <div class="logo">
-
-        <i class="fas fa-store"></i>
-
-        <h2>VendorHub</h2>
-
-        <p>Inventory Management</p>
-
-    </div>
+            <div class="logo">
+            <img class="brand-mark" src="assets/logo.png" alt="VendorHub logo" width="44" height="44">
+            <div class="brand-text">
+                <h2>VendorHub</h2>
+                <p>Inventory</p>
+            </div>
+        </div>
 
     <a href="dashboard.html">
         <i class="fas fa-house"></i>
@@ -57,6 +60,17 @@
     <a href="reports.html" class="active">
         <i class="fas fa-chart-line"></i>
         Reports
+    </a>
+
+    
+    <a href="settings.html">
+        <i class="fas fa-gear"></i>
+        Settings
+    </a>
+
+<a href="#" class="logout-link" onclick="logoutUser(); return false;">
+        <i class="fas fa-right-from-bracket"></i>
+        Logout
     </a>
 
 </div>
@@ -99,34 +113,41 @@
 
             <!-- Report Table -->
 
-            <div class="card">
+            <div class="card table-card">
 
                 <h2>Sales Report</h2>
 
                 <br>
 
-                <table>
+                <div id="reportEmpty" class="product-empty-state table-empty" hidden>
+                    <div class="product-empty-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>No sales to report</h3>
+                    <p>There are no sales recorded yet. Once you record sales, they will show up here with your revenue summary.</p>
+                    <a href="sales.html">
+                        <button type="button" class="btn-add">
+                            <i class="fas fa-plus"></i> New Sale
+                        </button>
+                    </a>
+                </div>
 
-                    <thead>
-
-                        <tr>
-
-                            <th>ID</th>
-                            <th>Customer</th>
-                            <th>Product</th>
-                            <th>Quantity</th>
-                            <th>Total</th>
-                            <th>Date</th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody id="reportTable">
-
-                    </tbody>
-
-                </table>
+                <div id="reportTableWrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reportTable">
+                        </tbody>
+                    </table>
+                </div>
 
             </div>
 
@@ -139,12 +160,9 @@
 <footer>
 
     VendorHub Inventory System
-
-    <br><br>
-
-    Developed by Brown © 2026
-
 </footer>
+
+<script src="js/auth.js"></script>
 
 <script src="js/reports.js"></script>
 

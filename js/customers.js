@@ -4,200 +4,204 @@
 
 let currentCustomer = null;
 
-// =====================================
-// LOAD WHEN PAGE OPENS
-// =====================================
 document.addEventListener("DOMContentLoaded", () => {
 
     loadCustomers();
 
-    document.getElementById("addCustomerBtn").onclick = function(){
+    document.getElementById("addCustomerBtn").addEventListener("click", openAddCustomer);
+    document.getElementById("saveCustomerBtn").addEventListener("click", saveCustomer);
+    document.getElementById("closeCustomerFormBtn").addEventListener("click", hideCustomerForm);
+    document.getElementById("cancelCustomerBtn").addEventListener("click", hideCustomerForm);
+    document.getElementById("customerModalBackdrop").addEventListener("click", hideCustomerForm);
 
-        currentCustomer = null;
-
-        document.getElementById("customerForm").style.display = "block";
-
-        document.getElementById("customerName").value = "";
-        document.getElementById("customerPhone").value = "";
-        document.getElementById("customerEmail").value = "";
-        document.getElementById("customerAddress").value = "";
-
-        document.getElementById("saveCustomerBtn").innerHTML =
-        "Save Customer";
-
-    };
-
-    document.getElementById("saveCustomerBtn").onclick = saveCustomer;
+    var emptyBtn = document.getElementById("emptyAddCustomerBtn");
+    if (emptyBtn) {
+        emptyBtn.addEventListener("click", openAddCustomer);
+    }
 
 });
 
-// =====================================
-// LOAD CUSTOMERS
-// =====================================
-function loadCustomers(){
+function openAddCustomer() {
+    currentCustomer = null;
+    clearCustomerForm();
+    setCustomerFormMode(false);
+    showCustomerForm();
+}
 
-    fetch("../vendorhub-back/get_customers.php")
+function showCustomerForm() {
+    document.getElementById("customerModal").hidden = false;
+    document.body.style.overflow = "hidden";
+    setTimeout(function () {
+        document.getElementById("customerName").focus();
+    }, 50);
+}
 
-    .then(response => response.json())
+function hideCustomerForm() {
+    document.getElementById("customerModal").hidden = true;
+    document.body.style.overflow = "";
+    clearCustomerForm();
+}
 
-    .then(customers => {
+function setCustomerFormMode(editing) {
+    var title = document.querySelector("#customerForm h2");
+    var saveBtn = document.getElementById("saveCustomerBtn");
+    if (title) {
+        title.textContent = editing ? "Edit Customer" : "Add Customer";
+    }
+    if (saveBtn) {
+        saveBtn.textContent = editing ? "Update Customer" : "Save Customer";
+    }
+}
 
-        let html = "";
+function clearCustomerForm() {
+    document.getElementById("customerName").value = "";
+    document.getElementById("customerPhone").value = "";
+    document.getElementById("customerEmail").value = "";
+    document.getElementById("customerAddress").value = "";
+    currentCustomer = null;
+    setCustomerFormMode(false);
+}
 
-        customers.forEach(customer => {
+function emptyCustomerStateHtml() {
+    return `
+        <div class="product-empty-state">
+            <div class="product-empty-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3>No customers yet</h3>
+            <p>You have not added any customers. Click <strong>Add Customer</strong> at the top right to create your first one.</p>
+            <button type="button" id="emptyAddCustomerBtn" class="btn-add">
+                <i class="fas fa-plus"></i> Add Customer
+            </button>
+        </div>
+    `;
+}
 
-            html += `
+function escapeAttr(value) {
+    return String(value ?? "")
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'")
+        .replace(/\n/g, " ");
+}
 
-            <tr>
+function escapeHtml(value) {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+}
 
-                <td>${customer.id}</td>
+function initialFor(name) {
+    var text = String(name || "?").trim();
+    return text ? text.charAt(0).toUpperCase() : "?";
+}
 
-                <td>${customer.name}</td>
+function loadCustomers() {
 
-                <td>${customer.phone}</td>
+    fetch("../vendorhub-back/get_customers.php", { credentials: "same-origin" })
+        .then(response => response.json())
+        .then(customers => {
 
-                <td>${customer.email}</td>
+            const grid = document.getElementById("customerGrid");
+            grid.innerHTML = "";
 
-                <td>${customer.address}</td>
+            if (!Array.isArray(customers) || customers.length === 0) {
+                grid.innerHTML = emptyCustomerStateHtml();
+                var emptyBtn = document.getElementById("emptyAddCustomerBtn");
+                if (emptyBtn) {
+                    emptyBtn.addEventListener("click", openAddCustomer);
+                }
+                return;
+            }
 
-                <td>
+            customers.forEach(customer => {
+                grid.innerHTML += `
+                <article class="customer-card">
+                    <div class="customer-card-avatar">${escapeHtml(initialFor(customer.name))}</div>
+                    <div class="customer-card-body">
+                        <h3 class="customer-card-title">${escapeHtml(customer.name)}</h3>
+                        <p class="customer-card-line"><i class="fas fa-phone"></i> ${escapeHtml(customer.phone || "—")}</p>
+                        <p class="customer-card-line"><i class="fas fa-envelope"></i> ${escapeHtml(customer.email || "—")}</p>
+                        <p class="customer-card-line"><i class="fas fa-location-dot"></i> ${escapeHtml(customer.address || "—")}</p>
+                        <div class="product-card-actions">
+                            <button type="button" onclick="editCustomer(
+                                ${customer.id},
+                                '${escapeAttr(customer.name)}',
+                                '${escapeAttr(customer.phone)}',
+                                '${escapeAttr(customer.email)}',
+                                '${escapeAttr(customer.address)}'
+                            )">Edit</button>
+                            <button type="button" class="btn-danger" onclick="deleteCustomer(${customer.id})">Delete</button>
+                        </div>
+                    </div>
+                </article>
+                `;
+            });
 
-                    <button onclick="editCustomer(
-                        ${customer.id},
-                        '${customer.name}',
-                        '${customer.phone}',
-                        '${customer.email}',
-                        '${customer.address}'
-                    )">
-
-                        Edit
-
-                    </button>
-
-                    <button onclick="deleteCustomer(${customer.id})">
-
-                        Delete
-
-                    </button>
-
-                </td>
-
-            </tr>
-
-            `;
-
-        });
-
-        document.getElementById("customerTable").innerHTML = html;
-
-    });
+        })
+        .catch(error => console.error(error));
 
 }
 
-// =====================================
-// SAVE / UPDATE CUSTOMER
-// =====================================
-function saveCustomer(){
+function saveCustomer() {
 
     const formData = new FormData();
+    formData.append("name", document.getElementById("customerName").value);
+    formData.append("phone", document.getElementById("customerPhone").value);
+    formData.append("email", document.getElementById("customerEmail").value);
+    formData.append("address", document.getElementById("customerAddress").value);
 
-    formData.append(
-        "name",
-        document.getElementById("customerName").value
-    );
+    let url = "../vendorhub-back/add_customers.php";
 
-    formData.append(
-        "phone",
-        document.getElementById("customerPhone").value
-    );
-
-    formData.append(
-        "email",
-        document.getElementById("customerEmail").value
-    );
-
-    formData.append(
-        "address",
-        document.getElementById("customerAddress").value
-    );
-
-    let url;
-
-    if(currentCustomer == null){
-
-        url = "../vendorhub-back/add_customers.php";
-
-    }else{
-
+    if (currentCustomer !== null) {
         formData.append("id", currentCustomer);
-
         url = "../vendorhub-back/update_customers.php";
-
     }
 
-    fetch(url,{
-
-        method:"POST",
-
-        body:formData
-
+    fetch(url, {
+        method: "POST",
+        body: formData,
+        credentials: "same-origin"
     })
-
-    .then(response => response.text())
-
-    .then(message => {
-
-        alert(message);
-
-        currentCustomer = null;
-
-        document.getElementById("customerForm").style.display = "none";
-
-        document.getElementById("saveCustomerBtn").innerHTML =
-        "Save Customer";
-
-        loadCustomers();
-
-    });
+        .then(response => response.text())
+        .then(message => {
+            alert(message);
+            hideCustomerForm();
+            loadCustomers();
+        })
+        .catch(error => {
+            console.error(error);
+            alert("Something went wrong.");
+        });
 
 }
 
-// =====================================
-// EDIT CUSTOMER
-// =====================================
-function editCustomer(id, name, phone, email, address){
+function editCustomer(id, name, phone, email, address) {
 
     currentCustomer = id;
-
-    document.getElementById("customerForm").style.display = "block";
-
     document.getElementById("customerName").value = name;
     document.getElementById("customerPhone").value = phone;
     document.getElementById("customerEmail").value = email;
     document.getElementById("customerAddress").value = address;
-
-    document.getElementById("saveCustomerBtn").innerHTML =
-    "Update Customer";
+    setCustomerFormMode(true);
+    showCustomerForm();
 
 }
 
-// =====================================
-// DELETE CUSTOMER
-// =====================================
-function deleteCustomer(id){
+function deleteCustomer(id) {
 
-    if(!confirm("Delete this customer?")) return;
+    if (!confirm("Delete this customer?")) return;
 
-    fetch("../vendorhub-back/delete_customers.php?id=" + id)
-
-    .then(response => response.text())
-
-    .then(message => {
-
-        alert(message);
-
-        loadCustomers();
-
-    });
+    fetch("../vendorhub-back/delete_customers.php?id=" + id, { credentials: "same-origin" })
+        .then(response => response.text())
+        .then(message => {
+            alert(message);
+            loadCustomers();
+        })
+        .catch(error => {
+            console.error(error);
+            alert("Delete failed.");
+        });
 
 }

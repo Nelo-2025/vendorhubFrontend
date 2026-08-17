@@ -1,68 +1,148 @@
-<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VendorHub — Inventory for Nigerian businesses</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+    <link rel="stylesheet" href="landing.css">
+</head>
+<body class="marketing">
 
-    <div class="app">
-    
-        <!-- Sidebar -->
-        <aside class="sidebar">
-    
-            <div class="logo">
-                <h2>VendorHub</h2>
-                <p>Inventory System</p>
-            </div>
-    
-            <ul class="menu">
-    
-                <li onclick="loadPage('dashboard')" class="active">
-                    📊 Dashboard
-                </li>
-    
-                <li onclick="loadPage('products')">
-                    📦 Products
-                </li>
-    
-                <li onclick="loadPage('customers')">
-                    👥 Customers
-                </li>
-    
-                <li onclick="loadPage('sales')">
-                    💰 Sales
-                </li>
-    
-                <li onclick="loadPage('inventory')">
-                    📋 Inventory
-                </li>
-    
-                <li onclick="loadPage('reports')">
-                    📈 Reports
-                </li>
-    
-                <li onclick="loadPage('settings')">
-                    ⚙️ Settings
-                </li>
-    
-            </ul>
-    
-        </aside>
-    
-        <!-- Main Area -->
-        <main class="main">
-    
-            <header class="topbar">
-    
-                <h2 id="pageTitle">Dashboard</h2>
-    
-                <div class="user-info">
-                    👤 Administrator
-                </div>
-    
-            </header>
-    
-            <div id="content"></div>
-    
-        </main>
-    
+<header class="m-nav">
+    <div class="m-container m-nav-inner">
+        <a class="m-brand" href="index.html">
+            <img src="assets/logo.png" alt="VendorHub">
+            <span>VendorHub</span>
+        </a>
+        <nav class="m-nav-links">
+            <a class="m-hide-sm" href="index.html">Home</a>
+            <a class="m-hide-sm" href="pricing.html">Pricing</a>
+            <a href="login.html">Login</a>
+            <a class="m-btn m-btn-primary" href="register.html">Get started</a>
+        </nav>
     </div>
-    
-    <script src="js/app.js"></script>
-    
-    </body>
+</header>
+
+<section class="m-hero">
+    <div class="m-hero-media">
+        <img src="assets/landing-hero.jpg" alt="Well-stocked Nigerian retail shop shelves">
+    </div>
+    <div class="m-hero-scrim"></div>
+    <div class="m-hero-content">
+        <div class="m-hero-brand">
+            <img src="assets/logo.png" alt="">
+            <strong>VendorHub</strong>
+        </div>
+        <h1>Run your shop with clear stock and sales.</h1>
+        <p>Built for traders, store owners, and growing teams who need inventory they can trust every day.</p>
+        <div class="m-hero-ctas">
+            <a class="m-btn m-btn-primary m-btn-lg" href="register.html">Start managing stock</a>
+            <a class="m-btn m-btn-ghost m-btn-lg" href="pricing.html">See pricing</a>
+        </div>
+    </div>
+</section>
+
+<section class="m-section" id="features">
+    <div class="m-container m-split">
+        <div class="reveal">
+            <p class="m-eyebrow">What VendorHub does</p>
+            <h2>Know what you have, what sold, and what to restock.</h2>
+            <p class="m-lead">From market stalls to supermarket aisles, keep products, customers, and sales in one place — in Naira, on your phone or laptop.</p>
+
+            <div class="m-feature-list">
+                <div class="m-feature">
+                    <div class="m-feature-icon"><i class="fas fa-box"></i></div>
+                    <div>
+                        <h3>Product & stock control</h3>
+                        <p>Add products with photos, track quantities, and catch low stock before you run out.</p>
+                    </div>
+                </div>
+                <div class="m-feature">
+                    <div class="m-feature-icon"><i class="fas fa-cart-shopping"></i></div>
+                    <div>
+                        <h3>Fast sales recording</h3>
+                        <p>Record sales in seconds. Stock updates automatically so your books stay accurate.</p>
+                    </div>
+                </div>
+                <div class="m-feature">
+                    <div class="m-feature-icon"><i class="fas fa-chart-line"></i></div>
+                    <div>
+                        <h3>Local business insights</h3>
+                        <p>See weekly revenue, top products, and stock health on a dashboard built for busy owners.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <aside class="m-panel reveal">
+            <h3>Made for everyday Nigerian commerce</h3>
+            <p>Track garri, phones, fashion, provisions — whatever you sell — with clear ₦ totals and mobile-friendly tools.</p>
+        </aside>
+    </div>
+</section>
+
+<section class="m-section m-section-alt">
+    <div class="m-container">
+        <p class="m-eyebrow reveal">Who it’s for</p>
+        <h2 class="reveal">Built for people who sell every day</h2>
+        <p class="m-lead reveal">Whether you run one shop or several counters, VendorHub keeps your numbers honest.</p>
+
+        <div class="m-audience">
+            <article class="reveal">
+                <i class="fas fa-store"></i>
+                <h3>Shop owners</h3>
+                <p>Stop guessing stock from memory. See what is left and what is moving this week.</p>
+            </article>
+            <article class="reveal">
+                <i class="fas fa-basket-shopping"></i>
+                <h3>Traders & provision stores</h3>
+                <p>Record sales quickly during rush hours and restock the right items first.</p>
+            </article>
+            <article class="reveal">
+                <i class="fas fa-users"></i>
+                <h3>Growing teams</h3>
+                <p>Keep customers, inventory, and sales organised as your business scales.</p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="m-section">
+    <div class="m-container">
+        <div class="m-cta reveal">
+            <div>
+                <h2>Ready to organise your inventory?</h2>
+                <p>Create your VendorHub account and start tracking stock and sales in minutes.</p>
+            </div>
+            <div class="m-hero-ctas">
+                <a class="m-btn m-btn-primary m-btn-lg" href="register.html">Create account</a>
+                <a class="m-btn m-btn-ghost m-btn-lg" href="login.html">Login</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="m-footer">
+    <div class="m-container m-footer-inner">
+        <div class="m-brand">
+            <img src="assets/logo.png" alt="">
+            <span>VendorHub</span>
+        </div>
+        <div>
+            <a href="pricing.html">Pricing</a>
+            &nbsp;·&nbsp;
+            <a href="login.html">Login</a>
+            &nbsp;·&nbsp;
+            <a href="register.html">Register</a>
+        </div>
+    </div>
+</footer>
+
+<script src="js/landing.js"></script>
+</body>
+</html>

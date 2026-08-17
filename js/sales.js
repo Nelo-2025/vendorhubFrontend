@@ -2,101 +2,111 @@
 // SALES.JS
 // ===============================
 
-let currentSale = null;
-
-// Load everything
 document.addEventListener("DOMContentLoaded", () => {
 
     loadCustomers();
     loadProducts();
     loadSales();
 
-    document.getElementById("product")
-        .addEventListener("change", updatePrice);
+    document.getElementById("product").addEventListener("change", updatePrice);
+    document.getElementById("quantity").addEventListener("input", updateTotal);
+    document.getElementById("saveSaleBtn").addEventListener("click", saveSale);
 
-    document.getElementById("quantity")
-        .addEventListener("input", updateTotal);
+    document.getElementById("addSaleBtn").addEventListener("click", openSaleForm);
+    document.getElementById("closeSaleFormBtn").addEventListener("click", hideSaleForm);
+    document.getElementById("cancelSaleBtn").addEventListener("click", hideSaleForm);
+    document.getElementById("saleModalBackdrop").addEventListener("click", hideSaleForm);
 
-    document.getElementById("saveSaleBtn")
-        .addEventListener("click", saveSale);
+    var emptyBtn = document.getElementById("emptyAddSaleBtn");
+    if (emptyBtn) {
+        emptyBtn.addEventListener("click", openSaleForm);
+    }
 
 });
 
-// =====================================
-// LOAD CUSTOMERS
-// =====================================
+function openSaleForm() {
+    document.getElementById("quantity").value = 1;
+    updatePrice();
+    document.getElementById("saleModal").hidden = false;
+    document.body.style.overflow = "hidden";
+}
+
+function hideSaleForm() {
+    document.getElementById("saleModal").hidden = true;
+    document.body.style.overflow = "";
+    document.getElementById("quantity").value = 1;
+    updateTotal();
+}
+
 function loadCustomers() {
 
-    fetch("../vendorhub-back/get_customers_dropdown.php")
-    .then(response => response.json())
-    .then(customers => {
+    fetch("../vendorhub-back/get_customers_dropdown.php", { credentials: "same-origin" })
+        .then(response => response.json())
+        .then(customers => {
 
-        const customer = document.getElementById("customer");
+            const customer = document.getElementById("customer");
+            customer.innerHTML = "";
 
-        customer.innerHTML = "";
+            if (!Array.isArray(customers) || customers.length === 0) {
+                customer.innerHTML = `<option value="">No customers</option>`;
+                return;
+            }
 
-        customers.forEach(c => {
-
-            customer.innerHTML += `
-                <option value="${c.id}">
-                    ${c.name}
-                </option>
-            `;
+            customers.forEach(c => {
+                customer.innerHTML += `
+                    <option value="${c.id}">${c.name}</option>
+                `;
+            });
 
         });
 
-    });
-
 }
 
-// =====================================
-// LOAD PRODUCTS
-// =====================================
 function loadProducts() {
 
-    fetch("../vendorhub-back/get_products_dropdown.php")
-    .then(response => response.json())
-    .then(products => {
+    fetch("../vendorhub-back/get_products_dropdown.php", { credentials: "same-origin" })
+        .then(response => response.json())
+        .then(products => {
 
-        const product = document.getElementById("product");
+            const product = document.getElementById("product");
+            product.innerHTML = "";
 
-        product.innerHTML = "";
+            if (!Array.isArray(products) || products.length === 0) {
+                product.innerHTML = `<option value="">No products</option>`;
+                document.getElementById("price").value = "";
+                updateTotal();
+                return;
+            }
 
-        products.forEach(p => {
+            products.forEach(p => {
+                product.innerHTML += `
+                    <option value="${p.id}" data-price="${p.price}">
+                        ${p.name}
+                    </option>
+                `;
+            });
 
-            product.innerHTML += `
-                <option value="${p.id}" data-price="${p.price}">
-                    ${p.name}
-                </option>
-            `;
+            updatePrice();
 
         });
 
-        updatePrice();
-
-    });
-
 }
 
-// =====================================
-// UPDATE PRICE
-// =====================================
 function updatePrice() {
 
     let product = document.getElementById("product");
+    if (!product.options.length || !product.options[product.selectedIndex]) {
+        document.getElementById("price").value = "";
+        updateTotal();
+        return;
+    }
 
-    let price = product.options[product.selectedIndex]
-        .getAttribute("data-price");
-
-    document.getElementById("price").value = price;
-
+    let price = product.options[product.selectedIndex].getAttribute("data-price");
+    document.getElementById("price").value = price || "";
     updateTotal();
 
 }
 
-// =====================================
-// UPDATE TOTAL
-// =====================================
 function updateTotal() {
 
     let price = parseFloat(document.getElementById("price").value);
@@ -109,126 +119,105 @@ function updateTotal() {
 
 }
 
-// =====================================
-// SAVE SALE
-// =====================================
 function saveSale() {
 
     const formData = new FormData();
-
-    formData.append("customer",
-        document.getElementById("customer").value);
-
-    formData.append("product",
-        document.getElementById("product").value);
-
-    formData.append("quantity",
-        document.getElementById("quantity").value);
-
-    formData.append("total",
-        document.getElementById("total").value);
+    formData.append("customer", document.getElementById("customer").value);
+    formData.append("product", document.getElementById("product").value);
+    formData.append("quantity", document.getElementById("quantity").value);
+    formData.append("total", document.getElementById("total").value);
 
     fetch("../vendorhub-back/add_sales.php", {
-
         method: "POST",
-        body: formData
-
+        body: formData,
+        credentials: "same-origin"
     })
+        .then(response => response.json())
+        .then(data => {
 
-    .then(response => response.json())
+            alert(data.message);
 
-    .then(data => {
+            if (data.success) {
+                hideSaleForm();
+                loadSales();
+                loadProducts();
+            }
 
-        alert(data.message);
-
-        if (data.success) {
-
-            document.getElementById("quantity").value = 1;
-
-            updateTotal();
-
-            loadSales();
-
-        }
-
-    });
-
-}
-
-// =====================================
-// LOAD SALES
-// =====================================
-function loadSales() {
-
-    fetch("../vendorhub-back/get_sales.php")
-
-    .then(response => response.json())
-
-    .then(sales => {
-
-        const table = document.getElementById("salesTable");
-
-        table.innerHTML = "";
-
-        sales.forEach(sale => {
-
-            table.innerHTML += `
-
-            <tr>
-
-                <td>${sale.id}</td>
-
-                <td>${sale.customer}</td>
-
-                <td>${sale.product}</td>
-
-                <td>${sale.quantity}</td>
-
-                <td>₦${sale.total}</td>
-
-                <td>${sale.sale_date}</td>
-
-                <td>
-
-                    <button onclick="deleteSale(${sale.id})">
-                        Delete
-                    </button>
-
-                </td>
-
-            </tr>
-
-            `;
-
+        })
+        .catch(error => {
+            console.error(error);
+            alert("Something went wrong.");
         });
 
-        document.getElementById("salesCount").innerHTML = sales.length;
+}
 
-    });
+function loadSales() {
+
+    fetch("../vendorhub-back/get_sales.php", { credentials: "same-origin" })
+        .then(response => response.json())
+        .then(sales => {
+
+            const table = document.getElementById("salesTable");
+            const empty = document.getElementById("salesEmpty");
+            const wrap = document.getElementById("salesTableWrap");
+
+            table.innerHTML = "";
+
+            if (!Array.isArray(sales) || sales.length === 0) {
+                empty.hidden = false;
+                wrap.hidden = true;
+                document.getElementById("salesCount").innerHTML = "0";
+
+                var emptyBtn = document.getElementById("emptyAddSaleBtn");
+                if (emptyBtn) {
+                    emptyBtn.onclick = openSaleForm;
+                }
+                return;
+            }
+
+            empty.hidden = true;
+            wrap.hidden = false;
+
+            sales.forEach((sale, index) => {
+                table.innerHTML += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${sale.customer}</td>
+                    <td>${sale.product}</td>
+                    <td>${sale.quantity}</td>
+                    <td>₦${sale.total}</td>
+                    <td>${sale.sale_date}</td>
+                    <td>
+                        <button type="button" class="btn-danger" onclick="deleteSale(${sale.id})">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+                `;
+            });
+
+            document.getElementById("salesCount").innerHTML = sales.length;
+
+        })
+        .catch(error => console.error(error));
 
 }
 
-// =====================================
-// DELETE SALE
-// =====================================
 function deleteSale(id) {
 
     if (!confirm("Delete this sale?")) return;
 
-    fetch("../vendorhub-back/delete_sales.php?id=" + id)
-
-    .then(response => response.json())
-
-    .then(data => {
-
-        alert(data.message);
-
-        if (data.success) {
-
-            loadSales();
-
-        }
-
-    });
+    fetch("../vendorhub-back/delete_sales.php?id=" + id, { credentials: "same-origin" })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            if (data.success) {
+                loadSales();
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            alert("Delete failed.");
+        });
 
 }

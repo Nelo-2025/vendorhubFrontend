@@ -5,7 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>VendorHub</title>
     
-        <link rel="stylesheet" href="style.css">
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+
+    <link rel="stylesheet" href="style.css">
     
         
         <link rel="stylesheet"
@@ -19,15 +24,13 @@
 
 <div class="sidebar">
 
-    <div class="logo">
-
-        <i class="fas fa-store"></i>
-
-        <h2>VendorHub</h2>
-
-        <p>Inventory Management</p>
-
-    </div>
+            <div class="logo">
+            <img class="brand-mark" src="assets/logo.png" alt="VendorHub logo" width="44" height="44">
+            <div class="brand-text">
+                <h2>VendorHub</h2>
+                <p>Inventory</p>
+            </div>
+        </div>
 
     <a href="dashboard.html">
         <i class="fas fa-house"></i>
@@ -59,6 +62,17 @@
         Reports
     </a>
 
+    
+    <a href="settings.html">
+        <i class="fas fa-gear"></i>
+        Settings
+    </a>
+
+<a href="#" class="logout-link" onclick="logoutUser(); return false;">
+        <i class="fas fa-right-from-bracket"></i>
+        Logout
+    </a>
+
 </div>
 
     <!-- Main Content -->
@@ -67,93 +81,63 @@
         <div class="container">
 
             <div class="header">
-
                 <div>
                     <h1>Products</h1>
-                    <p>Manage all products available in your inventory.</p>
+                    <p>Browse your inventory. Use Edit or Delete on each product.</p>
                 </div>
-
                 <div>
-                    <button id="addBtn">
-                        + Add Product
+                    <button id="addBtn" type="button" class="btn-add">
+                        <i class="fas fa-plus"></i> Add Product
                     </button>
                 </div>
-
             </div>
 
-            <!-- Product Form -->
-
-            <div id="productForm" class="card">
-
-                <h2>Add New Product</h2>
-
-                <br>
-
-                <input
-                    type="text"
-                    id="name"
-                    placeholder="Product Name"
-                >
-
-                <input
-                    type="text"
-                    id="category"
-                    placeholder="Category"
-                >
-
-                <input
-                    type="number"
-                    id="price"
-                    placeholder="Price (₦)"
-                >
-
-                <input
-                    type="number"
-                    id="stock"
-                    placeholder="Stock Quantity"
-                >
-
-                <br><br>
-
-                <button id="saveBtn">
-                    Save Product
-                </button>
-
+            <!-- Product Grid (main view) -->
+            <div id="productGrid" class="product-grid">
+                <div class="product-empty-state">
+                    <div class="product-empty-icon">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                    <h3>No products yet</h3>
+                    <p>You have not added any products. Click <strong>Add Product</strong> at the top right to create your first one.</p>
+                    <button type="button" id="emptyAddBtn" class="btn-add">
+                        <i class="fas fa-plus"></i> Add Product
+                    </button>
+                </div>
             </div>
 
-            <br>
+            <!-- Add / Edit overlay -->
+            <div id="productModal" class="product-modal" hidden>
+                <div class="product-modal-backdrop" id="productModalBackdrop"></div>
+                <div class="product-modal-panel card" id="productForm">
+                    <div class="product-modal-header">
+                        <h2>Add New Product</h2>
+                        <button type="button" class="modal-close" id="closeFormBtn" aria-label="Close">
+                            <i class="fas fa-xmark"></i>
+                        </button>
+                    </div>
 
-            <!-- Product Table -->
+                    <input type="text" id="name" placeholder="Product Name">
+                    <input type="text" id="category" placeholder="Category">
+                    <input type="number" id="price" placeholder="Price (₦)">
+                    <input type="number" id="stock" placeholder="Stock Quantity">
 
-            <div class="card">
+                    <label for="image">Product image</label>
+                    <input
+                        type="file"
+                        id="image"
+                        accept="image/jpeg,image/png,image/webp,image/gif"
+                    >
 
-                <h2>Product List</h2>
+                    <div id="imagePreviewWrap" class="image-preview-wrap" hidden>
+                        <img id="imagePreview" class="product-thumb" alt="Preview">
+                    </div>
 
-                <br>
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-
-                            <th>ID</th>
-                            <th>Product</th>
-                            <th>Category</th>
-                            <th>Price (₦)</th>
-                            <th>Stock</th>
-                            <th>Action</th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody id="productTable">
-
-                    </tbody>
-
-                </table>
-
+                    <div class="product-modal-actions">
+                        <button type="button" id="cancelFormBtn" class="btn-secondary">Cancel</button>
+                        <button type="button" id="saveBtn">Save Product</button>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -165,12 +149,9 @@
 <footer>
 
     VendorHub Inventory System
-
-    <br><br>
-
-    Developed by Brown © 2026
-
 </footer>
+
+<script src="js/auth.js"></script>
 
 <script src="js/products.js"></script>
 
